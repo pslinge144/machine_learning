@@ -73,26 +73,24 @@ for i = 1:m
 
     y_i = zeros(size(a3));
     y_i(y(i)) = 1;
+        
     J = J + sum(-1 .* y_i .* log(a3) - (1 - y_i) .* log(1 - a3));
+
+    delta_3 = a3 - y_i;
+    delta_2 = Theta2' * delta_3 .* sigmoidGradient(z2);
+    Theta2_grad = Theta2_grad + delta_2(2:end);
+    
+    delta_1 = Theta1' * delta_2 .* sigmoidGradient(z1);
+    Theta1_grad = Theta1_grad + delta_1(2:end);
 end
 
 J = (1 / m) * J;
 
+Theta1_grad = (1 / m) .* Theta1_grad;
+Theta2_grad = (1 / m) .* Theta2_grad
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+reg = sum(sum(Theta1(:, 2:end).^2)) + sum(sum(Theta2(:, 2:end).^2)); 
+J = J + (lambda / (2 * m)) .* reg;
 
 % -------------------------------------------------------------
 

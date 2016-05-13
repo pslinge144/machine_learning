@@ -77,17 +77,18 @@ for i = 1:m
     J = J + sum(-1 .* y_i .* log(a3) - (1 - y_i) .* log(1 - a3));
 
     delta_3 = a3 - y_i;
-    delta_2 = Theta2' * delta_3 .* sigmoidGradient(z2);
-    Theta2_grad = Theta2_grad + delta_2(2:end);
-    
-    delta_1 = Theta1' * delta_2 .* sigmoidGradient(z1);
-    Theta1_grad = Theta1_grad + delta_1(2:end);
+    delta_2 = (Theta2' * delta_3) .* (a2 .* (1 - a2));
+    Theta2_grad = Theta2_grad + delta_3 * a2';
+    Theta1_grad = Theta1_grad + delta_2(2:end) * a1';
 end
 
 J = (1 / m) * J;
 
 Theta1_grad = (1 / m) .* Theta1_grad;
-Theta2_grad = (1 / m) .* Theta2_grad
+Theta2_grad = (1 / m) .* Theta2_grad;
+
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + (lambda / m) * Theta1(:, 2:end);
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + (lambda / m) * Theta2(:, 2:end);
 
 reg = sum(sum(Theta1(:, 2:end).^2)) + sum(sum(Theta2(:, 2:end).^2)); 
 J = J + (lambda / (2 * m)) .* reg;

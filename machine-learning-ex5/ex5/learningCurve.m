@@ -52,8 +52,12 @@ error_val   = zeros(m, 1);
 %
 
 % ---------------------- Sample Solution ----------------------
+lambda = 0;
 
-
+for i = 1:m
+    [theta] = trainLinearReg([ones(m, 1) X], y, lambda);
+    
+end
 
 
 

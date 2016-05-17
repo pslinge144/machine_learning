@@ -217,4 +217,10 @@ for i = 1:length(lambda_vec)
 end
 
 fprintf('Program paused. Press enter to continue.\n');
+[theta] = trainLinearReg(X, y, 3);
+J = linearRegCostFunction(Xtest, ytest, theta, 0);
+fprintf(['Cost at lambda = 3: %f '...
+         '\n(this value should be about 3.8599)\n'], J);
+
+
 pause;

@@ -216,11 +216,42 @@ for i = 1:length(lambda_vec)
             lambda_vec(i), error_train(i), error_val(i));
 end
 
+%% =========== Part 9: Evaluate on Test Data =============
+
 fprintf('Program paused. Press enter to continue.\n');
-[theta] = trainLinearReg(X, y, 3);
+[Xtrain, mu, sigma] = featureNormalize(X);  % Normalize
+Xtrain = [ones(size(Xtrain, 1), 1), Xtrain];
+[theta] = trainLinearReg(Xtrain, y, 3);
+
+Xtest = bsxfun(@minus, Xtest, mu);
+Xtest = bsxfun(@rdivide, Xtest, sigma);
+Xtest = [ones(size(Xtest, 1), 1), Xtest];
 J = linearRegCostFunction(Xtest, ytest, theta, 0);
 fprintf(['Cost at lambda = 3: %f '...
          '\n(this value should be about 3.8599)\n'], J);
 
+%% =========== Part 10: Learning Curve with Random Samples =============
+%  Now, you will get to experiment with polynomial regression with multiple
+%  values of lambda. The code below runs polynomial regression with 
+%  lambda = 0. You should try running the code with different values of
+%  lambda to see how the fit and learning curve change.
+%
+
+
+lambda = 0.01;
+[error_train, error_val] = ...
+    learningCurveRand([ones(m, 1) X], y, ...
+                  [ones(size(Xval, 1), 1) Xval], yval, ...
+                  lambda);
+
+plot(1:m, error_train, 1:m, error_val);
+title('Learning curve for linear regression')
+legend('Train', 'Cross Validation')
+xlabel('Number of training examples')
+ylabel('Error')
+axis([0 13 0 150])
+
+fprintf('Program paused. Press enter to continue.\n');
+pause;
 
 pause;

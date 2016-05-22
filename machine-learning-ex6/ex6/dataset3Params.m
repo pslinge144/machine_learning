@@ -24,7 +24,7 @@ sigma = 0.3;
 %
 
 vals = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
-p = length(vals)
+p = length(vals);
 
 err_min = 1e6;
 
@@ -38,7 +38,7 @@ for i = 1:p
         if err < err_min
             err_min = err;
             C = Ci;
-            simga = sigmaj;
+            sigma = sigmaj;
         endif
     end
 end

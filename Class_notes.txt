@@ -1,0 +1,8 @@
+K-Means notes
+Initialization: pick the initial centroids randomly from the data
+Mitigating the potential for local optima: re-run K-means algorithm many times (maybe 50 times) with different initial centroids and use the best set of centroids when done
+Determing performance: minimize distortion function ||x^(i) - mu_i||^2
+
+PCA Notes:
+DO NOT use to change the bias / variance of your model (since you are throwing away information that is not lost when you simply do regularization)
+Really handy for speeding up learning algorithms or for plotting the axes of your data with the highest variance.

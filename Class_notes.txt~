@@ -1,0 +1,4 @@
+K-Means notes
+Initialization: pick the initial centroids randomly from the data
+Mitigating the potential for local optima: re-run K-means algorithm many times (maybe 50 times) with different initial centroids and use the best set of centroids when done
+Determing performance: minimize distortion function ||x^(i) - mu_i||^2

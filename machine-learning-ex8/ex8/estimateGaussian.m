@@ -21,14 +21,13 @@ sigma2 = zeros(n, 1);
 %               should contain variance of the i-th feature.
 %
 
+mu = mean(X)';
 
-
-
-
-
-
-
-
+tot_err = zeros(n, 1);
+for i = 1:m
+    tot_err = tot_err + (X(i,:)' - mu).^2;
+end
+sigma2 = tot_err ./ m;
 
 % =============================================================
 
